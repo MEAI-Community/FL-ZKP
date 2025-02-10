@@ -1,0 +1,21 @@
+name: Auto-Assign Issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto Assign Issue
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: ['your-github-username']
+            });
